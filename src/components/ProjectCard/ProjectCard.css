@@ -1,0 +1,5 @@
+.project-card__image { aspect-ratio: 4 / 5; overflow: hidden; background: var(--beige); }
+.project-card__image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s var(--ease); }
+.project-card:hover .project-card__image img { transform: scale(1.04); }
+.project-card__title { font-size: 1.6rem; margin-top: 1.1rem; }
+.project-card__meta { color: var(--muted); font-size: 0.92rem; margin-top: 0.2rem; }

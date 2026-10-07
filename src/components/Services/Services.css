@@ -1,0 +1,7 @@
+.services__list { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--beige); }
+.service { padding: 2.2rem 2rem 2.6rem 0; border-bottom: 1px solid var(--beige); transition: border-color 0.3s var(--ease); }
+.service:hover { border-bottom-color: var(--bronze); }
+.service h3 { font-size: 1.7rem; margin-bottom: 0.7rem; }
+.service p { color: var(--muted); max-width: 32ch; }
+@media (max-width: 900px) { .services__list { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .services__list { grid-template-columns: 1fr; } .service { padding-right: 0; } }

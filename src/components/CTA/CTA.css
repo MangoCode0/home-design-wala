@@ -1,0 +1,5 @@
+.cta { background: var(--charcoal); color: var(--offwhite); text-align: center; }
+.cta__inner { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+.cta h2 { font-size: clamp(2.2rem, 5vw, 4rem); max-width: 18ch; }
+.cta p { color: #cfc9bd; max-width: 46ch; }
+.cta .btn { margin-top: 0.8rem; }

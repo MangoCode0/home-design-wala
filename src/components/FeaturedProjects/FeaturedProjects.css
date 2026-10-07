@@ -1,0 +1,10 @@
+.projects__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(2rem, 4vw, 3.5rem) clamp(1.2rem, 2.5vw, 2.5rem); }
+/* Middle column sits lower on desktop for a more editorial rhythm */
+.projects__grid > :nth-child(3n + 2) { margin-top: 3rem; }
+@media (max-width: 900px) {
+  .projects__grid { grid-template-columns: repeat(2, 1fr); }
+  .projects__grid > :nth-child(3n + 2) { margin-top: 0; }
+}
+@media (max-width: 560px) {
+  .projects__grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,6 @@
+.section-heading { max-width: 640px; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+.section-heading__intro { color: var(--bronze-dark); font-weight: 500; margin-bottom: 0.9rem; }
+.section-heading__title { font-size: clamp(2.2rem, 4.5vw, 3.5rem); }
+.section-heading__text { margin-top: 1.2rem; color: var(--muted); max-width: 52ch; }
+.section-heading--light .section-heading__intro { color: var(--bronze); }
+.section-heading--light .section-heading__text { color: #cfc9bd; }

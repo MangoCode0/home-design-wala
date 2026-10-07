@@ -1,0 +1,26 @@
+.navbar { position: fixed; inset: 0 0 auto 0; z-index: 50; transition: background-color 0.4s var(--ease), border-color 0.4s var(--ease); border-bottom: 1px solid transparent; }
+.navbar--solid { background: rgba(247, 245, 240, 0.94); backdrop-filter: blur(8px); border-bottom-color: var(--beige); }
+.navbar__inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+.navbar__logo { font-family: var(--font-heading); font-size: 1.55rem; letter-spacing: -0.01em; }
+.navbar__menu { display: flex; align-items: center; gap: 2.5rem; }
+.navbar__links { display: flex; gap: 2rem; font-size: 0.95rem; }
+.navbar__links a { position: relative; padding-block: 0.3rem; }
+.navbar__links a::after { content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 1px; background: var(--bronze); transform: scaleX(0); transform-origin: left; transition: transform 0.35s var(--ease); }
+.navbar__links a:hover::after { transform: scaleX(1); }
+.navbar__cta { padding: 0.7rem 1.4rem; }
+.navbar__toggle { display: none; width: 44px; height: 44px; position: relative; }
+.navbar__toggle span { position: absolute; left: 10px; right: 10px; height: 1.5px; background: var(--charcoal); transition: transform 0.3s var(--ease), top 0.3s var(--ease); }
+.navbar__toggle span:first-child { top: 17px; }
+.navbar__toggle span:last-child { top: 26px; }
+.navbar__toggle--open span:first-child { top: 21px; transform: rotate(45deg); }
+.navbar__toggle--open span:last-child { top: 21px; transform: rotate(-45deg); }
+
+/* Tablet and mobile: menu becomes a dropdown panel */
+@media (max-width: 900px) {
+  .navbar__toggle { display: block; }
+  .navbar__menu { position: absolute; top: 76px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 1.5rem; padding: 1.5rem 1.5rem 2rem; background: var(--offwhite); border-bottom: 1px solid var(--beige); opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0.3s; }
+  .navbar__menu--open { opacity: 1; visibility: visible; transform: none; }
+  .navbar__links { flex-direction: column; gap: 0.4rem; font-size: 1.1rem; }
+  .navbar__links a { display: block; padding-block: 0.6rem; }
+  .navbar__cta { text-align: center; }
+}
