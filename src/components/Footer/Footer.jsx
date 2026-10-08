@@ -1,15 +1,22 @@
 import "./Footer.css";
+import useApiResource from "../../hooks/useApiResource";
 
 function Footer() {
-  // new Date().getFullYear() keeps the copyright year up to date automatically.
   const year = new Date().getFullYear();
+  const { value: settings, loading, error } = useApiResource("/api/settings/");
+  const socialLinks = [
+    ["Instagram", settings?.instagramUrl],
+    ["Facebook", settings?.facebookUrl],
+    ["YouTube", settings?.youtubeUrl],
+    ["Pinterest", settings?.pinterestUrl],
+  ].filter(([, url]) => url);
 
   return (
     <footer className="footer">
       <div className="container footer__inner">
         <div className="footer__brand">
-          <p className="footer__logo">Home Design Wala</p>
-          <p>Designs That Feel Like Home.</p>
+          <p className="footer__logo">{settings?.businessName || "Home Design Wala"}</p>
+          {settings?.shortDescription && <p>{settings.shortDescription}</p>}
         </div>
 
         <nav aria-label="Footer">
@@ -25,9 +32,14 @@ function Footer() {
         <div>
           <h3>Contact</h3>
           <ul>
-            <li><a href="mailto:hello@homedesignwala.com">hello@homedesignwala.com</a></li>
-            <li>+91 00000 00000</li>
-            <li>Delhi NCR, India</li>
+            {settings?.businessEmail && <li><a href={`mailto:${settings.businessEmail}`}>{settings.businessEmail}</a></li>}
+            {settings?.phoneNumber && <li><a href={`tel:${settings.phoneNumber}`}>{settings.phoneNumber}</a></li>}
+            {settings?.whatsappNumber && <li><a href={`https://wa.me/${settings.whatsappNumber.replace(/\D/g, "")}`} target="_blank" rel="noreferrer">WhatsApp</a></li>}
+            {settings?.businessAddress && <li>{settings.businessAddress}</li>}
+            {settings?.businessHours && <li>{settings.businessHours}</li>}
+            {socialLinks.map(([label, url]) => <li key={label}><a href={url} target="_blank" rel="noreferrer">{label}</a></li>)}
+            {loading && <li role="status">Loading contact details…</li>}
+            {error && <li role="alert">Contact details are temporarily unavailable.</li>}
           </ul>
         </div>
       </div>

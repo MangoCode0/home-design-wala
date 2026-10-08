@@ -7,7 +7,6 @@ const links = [
   { label: "Services", href: "#services" },
   { label: "Process", href: "#process" },
   { label: "About", href: "#about" },
-  { label: "Reviews", href: "#testimonials" },
 ];
 
 function Navbar() {

@@ -218,6 +218,9 @@
 .admin-login-card h1 { margin-top: 12px; font-size: 34px; }
 .admin-login-card > p { margin: 9px 0 22px; color: #827d73; font-size: 12px; line-height: 1.7; }
 .admin-login-continue { width: 100%; justify-content: space-between; }
+.admin-login-card form { display: grid; gap: 13px; }
+.admin-login-card form .admin-button { width: 100%; }
+.admin-error { margin: 0 0 14px; color: #a94438; font-size: 12px; }
 .admin-back-public { display: block; margin-top: 18px; color: #817b71; font-size: 11px; text-align: center; }
 .admin-demo-note { margin-top: 27px; padding-top: 16px; border-top: 1px solid #eeeae3; color: #9a948a; font-size: 9px; letter-spacing: .1em; text-align: center; }
 .admin-demo-note span { margin: 0 5px; color: #bd9b66; }

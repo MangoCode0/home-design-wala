@@ -20,11 +20,6 @@ function About() {
             materials that age well.
           </p>
 
-          <dl className="about__facts">
-            <div><dt>12+</dt><dd>years of practice</dd></div>
-            <div><dt>150+</dt><dd>homes completed</dd></div>
-            <div><dt>8</dt><dd>cities served</dd></div>
-          </dl>
         </div>
       </div>
     </section>

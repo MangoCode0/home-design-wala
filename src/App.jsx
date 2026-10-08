@@ -5,14 +5,15 @@ import DesignCategories from "./components/DesignCategories/DesignCategories";
 import Services from "./components/Services/Services";
 import HowItWorks from "./components/HowItWorks/HowItWorks";
 import About from "./components/About/About";
-import Testimonials from "./components/Testimonials/Testimonials";
 import CTA from "./components/CTA/CTA";
 import Footer from "./components/Footer/Footer";
+import SiteMetadata from "./components/SiteMetadata";
 
 // App only decides the ORDER of the sections. Each section lives in its own file.
 function App() {
   return (
     <>
+      <SiteMetadata />
       <Navbar />
       <main>
         <Hero />
@@ -21,7 +22,6 @@ function App() {
         <Services />
         <HowItWorks />
         <About />
-        <Testimonials />
         <CTA />
       </main>
       <Footer />

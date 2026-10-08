@@ -1,36 +1,37 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getApi } from "../api/client";
 
-function useApiCollection(path, fallbackItems) {
-  const [items, setItems] = useState(fallbackItems);
+function useApiCollection(path, { authenticated = false } = {}) {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [revision, setRevision] = useState(0);
+
+  const reload = useCallback(() => setRevision((current) => current + 1), []);
 
   useEffect(() => {
     let active = true;
+    setLoading(true);
+    setError("");
 
-    getApi(path)
+    getApi(path, { authenticated })
       .then((result) => {
-        if (!Array.isArray(result)) {
-          console.warn(
-            `Expected an array from ${path}; keeping local sample data. The backend route currently returns a placeholder.`,
-            result,
-          );
-          return;
-        }
-
+        if (!Array.isArray(result)) throw new Error(`Expected a collection from ${path}.`);
         if (active) setItems(result);
       })
-      .catch((error) => {
-        if (active) {
-          console.error(`Could not load ${path}; keeping local sample data.`, error);
-        }
+      .catch((requestError) => {
+        if (active) setError(requestError.message || "Unable to load this collection.");
+      })
+      .finally(() => {
+        if (active) setLoading(false);
       });
 
     return () => {
       active = false;
     };
-  }, [path]);
+  }, [path, authenticated, revision]);
 
-  return [items, setItems];
+  return { items, setItems, loading, error, reload };
 }
 
 export default useApiCollection;
