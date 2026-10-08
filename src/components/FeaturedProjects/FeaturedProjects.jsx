@@ -1,10 +1,13 @@
-import projects from "../../data/projects";
+import fallbackProjects from "../../data/projects";
 import ProjectCard from "../ProjectCard/ProjectCard";
 import SectionHeading from "../SectionHeading/SectionHeading";
 import Reveal from "../Reveal/Reveal";
+import useApiCollection from "../../hooks/useApiCollection";
 import "./FeaturedProjects.css";
 
 function FeaturedProjects() {
+  const [projects] = useApiCollection("/api/projects/", fallbackProjects);
+
   return (
     <section className="section" id="projects">
       <div className="container">

@@ -1,8 +1,11 @@
-import categories from "../../data/categories";
+import fallbackCategories from "../../data/categories";
 import SectionHeading from "../SectionHeading/SectionHeading";
+import useApiCollection from "../../hooks/useApiCollection";
 import "./DesignCategories.css";
 
 function DesignCategories() {
+  const [categories] = useApiCollection("/api/categories/", fallbackCategories);
+
   return (
     <section className="section section--beige" id="categories">
       <div className="container">

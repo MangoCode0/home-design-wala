@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { enquiryStatuses, initialCategories, initialEnquiries, initialProjects, initialServices } from "./adminData";
+import useApiCollection from "../hooks/useApiCollection";
 
 const navItems = [
   ["Dashboard", "/admin/dashboard", "▦"],
@@ -31,10 +32,10 @@ function EmptyState({ title, message }) {
 }
 
 function AdminLayout() {
-  const [projects, setProjects] = useState(initialProjects);
-  const [enquiries, setEnquiries] = useState(initialEnquiries);
-  const [services, setServices] = useState(initialServices);
-  const [categories, setCategories] = useState(initialCategories);
+  const [projects, setProjects] = useApiCollection("/api/projects/", initialProjects);
+  const [enquiries, setEnquiries] = useApiCollection("/api/enquiries/", initialEnquiries);
+  const [services, setServices] = useApiCollection("/api/services/", initialServices);
+  const [categories, setCategories] = useApiCollection("/api/categories/", initialCategories);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const pageKey = location.pathname.split("/")[2] || "dashboard";

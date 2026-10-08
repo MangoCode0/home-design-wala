@@ -1,8 +1,11 @@
-import services from "../../data/services";
+import fallbackServices from "../../data/services";
 import SectionHeading from "../SectionHeading/SectionHeading";
+import useApiCollection from "../../hooks/useApiCollection";
 import "./Services.css";
 
 function Services() {
+  const [services] = useApiCollection("/api/services/", fallbackServices);
+
   return (
     <section className="section" id="services">
       <div className="container">
