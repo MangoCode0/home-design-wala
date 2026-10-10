@@ -5,7 +5,7 @@ function About() {
     <section className="section" id="about">
       <div className="container about__inner">
         <div className="about__image">
-          <img src="/images/about.svg" alt="Architect reviewing drawings at a studio table" loading="lazy" />
+          <img src="/images/projects/modern-residence-02-cover.png" alt="Modern architectural residence exterior render" loading="lazy" />
         </div>
 
         <div className="about__text">

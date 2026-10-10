@@ -4,10 +4,9 @@ import "./HowItWorks.css";
 
 function HowItWorks() {
   return (
-    <section className="section section--dark" id="process">
+    <section className="section section--process" id="process">
       <div className="container">
         <SectionHeading
-          light
           intro="How it works"
           title="From first call to front door in four steps"
         />

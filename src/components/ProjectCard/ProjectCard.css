@@ -1,5 +1,7 @@
-.project-card__image { aspect-ratio: 4 / 5; overflow: hidden; background: var(--beige); }
+.project-card__link { display: block; color: inherit; text-decoration: none; }
+.project-card__link:focus-visible { outline: 2px solid var(--bronze); outline-offset: 5px; }
+.project-card__image { aspect-ratio: 4 / 3; overflow: hidden; background: var(--beige); }
 .project-card__image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s var(--ease); }
 .project-card:hover .project-card__image img { transform: scale(1.04); }
-.project-card__title { font-size: 1.6rem; margin-top: 1.1rem; }
-.project-card__meta { color: var(--muted); font-size: 0.92rem; margin-top: 0.2rem; }
+.project-card__title { font-size: clamp(1.35rem, 2vw, 1.7rem); margin-top: 1rem; }
+.project-card__meta { color: var(--muted); font-size: 0.88rem; letter-spacing: 0.045em; margin-top: 0.3rem; }

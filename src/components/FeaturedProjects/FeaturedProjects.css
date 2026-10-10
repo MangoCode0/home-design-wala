@@ -1,6 +1,8 @@
-.projects__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(2rem, 4vw, 3.5rem) clamp(1.2rem, 2.5vw, 2.5rem); }
+.projects__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(2rem, 4vw, 3.25rem) clamp(1.25rem, 2.5vw, 2.5rem); }
+.projects__notice { margin-bottom: 1rem; color: var(--muted); }
 /* Middle column sits lower on desktop for a more editorial rhythm */
-.projects__grid > :nth-child(3n + 2) { margin-top: 3rem; }
+.projects__grid > :nth-child(3n + 2) { margin-top: 2rem; }
+.section#projects { background: var(--offwhite); }
 @media (max-width: 900px) {
   .projects__grid { grid-template-columns: repeat(2, 1fr); }
   .projects__grid > :nth-child(3n + 2) { margin-top: 0; }
@@ -8,3 +10,7 @@
 @media (max-width: 560px) {
   .projects__grid { grid-template-columns: 1fr; }
 }
+.projects__filter { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; margin: -1rem 0 1.5rem; color: var(--muted); }
+.projects__filter button { padding: 0.25rem 0; border-bottom: 1px solid currentColor; color: var(--charcoal); text-decoration: none; }
+.projects__filter button:hover { color: var(--bronze-dark); }
+.projects__filter button:focus-visible { outline-offset: 4px; }

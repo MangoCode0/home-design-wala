@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import App from "./App.jsx";
 import AdminApp from "./admin/AdminApp.jsx";
+import ApiProjectDetails from "./pages/ApiProjectDetails.jsx";
+import StaticProjectDetails from "./pages/StaticProjectDetails.jsx";
 import "./index.css";
 import "./admin/admin.css";
 
@@ -11,6 +13,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/projects/static/:projectId" element={<StaticProjectDetails />} />
+        <Route path="/projects/:projectId" element={<ApiProjectDetails />} />
         <Route path="/admin/login" element={<AdminApp.Login />} />
         <Route path="/admin" element={<AdminApp.Layout />}>
           <Route index element={<Navigate to="dashboard" replace />} />

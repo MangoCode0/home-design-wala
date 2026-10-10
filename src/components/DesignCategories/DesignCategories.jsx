@@ -1,10 +1,10 @@
 import SectionHeading from "../SectionHeading/SectionHeading";
-import useApiCollection from "../../hooks/useApiCollection";
+import { getProjectsForCategory } from "../../data/publicPortfolio";
 import "./DesignCategories.css";
 
-function DesignCategories() {
-  const { items: categories, loading, error } = useApiCollection("/api/categories/");
+const fallbackImage = "/images/projects/contemporary-villa-cover.png";
 
+function DesignCategories({ categories, projects, loading, error, onSelectCategory }) {
   return (
     <section className="section section--beige" id="categories">
       <div className="container">
@@ -14,19 +14,40 @@ function DesignCategories() {
           text="Looking for ideas for one part of your home? Start here."
         />
 
-        {loading && <p role="status">Loading categories…</p>}
-        {error && <p role="alert">Categories could not be loaded. {error}</p>}
-        {!loading && !error && categories.length === 0 && <p>No categories are available yet.</p>}
+        {loading && <p className="categories__notice" role="status">Loading live categories…</p>}
+        {error && <p className="categories__notice" role="alert">Live categories could not be loaded. Showing categories from the local portfolio.</p>}
+        {!loading && !error && categories.length === 0 && <p className="categories__notice">No portfolio categories are available yet.</p>}
         <div className="categories__grid">
-          {categories.map((category) => (
-            <a href="#projects" className="category" key={category.id}>
-              {category.image && <img src={category.image} alt="" loading="lazy" />}
-              <div className="category__label">
-                <h3>{category.name}</h3>
-                <p>{category.count} designs</p>
-              </div>
-            </a>
-          ))}
+          {categories.map((category) => {
+            const categoryProjects = category.projects || getProjectsForCategory(category, projects, categories);
+            const categoryImage = categoryProjects.find((project) => project.image)?.image
+              || category.image
+              || fallbackImage;
+            return (
+              <a
+                href="#projects"
+                className="category"
+                key={category.id ?? category.name.toLocaleLowerCase()}
+                aria-label={`${category.name}, ${categoryProjects.length} ${categoryProjects.length === 1 ? "design" : "designs"}`}
+                onClick={() => onSelectCategory(category.name)}
+              >
+                <img
+                  src={categoryImage}
+                  alt=""
+                  loading="lazy"
+                  onError={(event) => {
+                    if (event.currentTarget.getAttribute("src") !== fallbackImage) {
+                      event.currentTarget.src = fallbackImage;
+                    }
+                  }}
+                />
+                <div className="category__label">
+                  <h3>{category.name}</h3>
+                  <p>{categoryProjects.length} {categoryProjects.length === 1 ? "design" : "designs"}</p>
+                </div>
+              </a>
+            );
+          })}
         </div>
       </div>
     </section>

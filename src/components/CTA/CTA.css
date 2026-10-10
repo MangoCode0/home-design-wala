@@ -1,15 +1,16 @@
-.cta { background: var(--charcoal); color: var(--offwhite); text-align: center; }
-.cta__inner { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+.cta { position: relative; isolation: isolate; overflow: hidden; color: var(--offwhite); text-align: center; background-color: var(--charcoal); background-image: linear-gradient(rgba(23, 23, 23, 0.84), rgba(23, 23, 23, 0.9)), url("/images/projects/dusk-residence-cover.png"); background-size: cover; background-position: center 48%; }
+.cta__inner { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
 .cta h2 { font-size: clamp(2.2rem, 5vw, 4rem); max-width: 18ch; }
-.cta p { color: #cfc9bd; max-width: 46ch; }
+.cta p { color: rgba(247, 245, 240, 0.76); max-width: 46ch; }
 .cta .btn { margin-top: 0.8rem; }
 .cta__form { width: min(760px, 100%); text-align: left; }
-.cta__fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-.cta__fields label { display: grid; gap: .35rem; color: #e5e0d6; font-size: .9rem; }
-.cta__fields input, .cta__fields textarea { width: 100%; border: 1px solid #69665f; border-radius: 0; padding: .75rem; background: #292824; color: var(--offwhite); }
+.cta__fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; }
+.cta__fields label { display: grid; gap: .4rem; color: rgba(247, 245, 240, 0.88); font-size: .9rem; }
+.cta__fields input, .cta__fields textarea { width: 100%; border: 1px solid rgba(247, 245, 240, 0.35); border-radius: 0; padding: .8rem .85rem; background: rgba(23, 23, 23, 0.68); color: var(--offwhite); }
 .cta__fields input:focus, .cta__fields textarea:focus { outline: 2px solid var(--bronze); outline-offset: 2px; }
 .cta__field-wide { grid-column: 1 / -1; }
 .cta__message { margin-top: 1rem; color: #e5e0d6 !important; }
 .cta__message--error { color: #ffb4a9 !important; }
 .cta__form .btn:disabled { opacity: .65; cursor: wait; }
+.cta__form > .btn { display: block; margin: 1.5rem auto 0; }
 @media (max-width: 560px) { .cta__fields { grid-template-columns: 1fr; } .cta__field-wide { grid-column: auto; } }

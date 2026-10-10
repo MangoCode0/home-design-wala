@@ -1,12 +1,12 @@
 /* ---------- Brand variables: change a color here and it changes everywhere ---------- */
 :root {
   --offwhite: #F7F5F0;
-  --charcoal: #1C1C1C;
-  --bronze: #B08D57;
-  --bronze-dark: #8A6B3A; /* darker bronze, used for small text so it stays readable */
-  --beige: #E8E2D8;
+  --charcoal: #171717;
+  --bronze: #C8A56B;
+  --bronze-dark: #8A6B3A;
+  --beige: #E7DFD2;
   --white: #FFFFFF;
-  --muted: #5E5A52;
+  --muted: #55524D;
 
   --font-heading: "Newsreader", Georgia, serif;
   --font-body: "DM Sans", system-ui, sans-serif;
@@ -48,11 +48,13 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 400; line-height: 1.
   font-size: 0.95rem;
   font-weight: 500;
   border: 1px solid var(--charcoal);
+  letter-spacing: 0.015em;
   transition: background-color 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
 }
 .btn--dark { background: var(--charcoal); color: var(--white); }
 .btn--dark:hover { background: var(--bronze); border-color: var(--bronze); }
-.btn--outline:hover { background: var(--charcoal); color: var(--white); }
+.btn--outline { border-color: currentColor; }
+.btn--outline:hover { background: var(--offwhite); color: var(--charcoal); border-color: var(--offwhite); }
 .btn--light { background: var(--offwhite); color: var(--charcoal); border-color: var(--offwhite); }
 .btn--light:hover { background: var(--bronze); border-color: var(--bronze); color: var(--white); }
 

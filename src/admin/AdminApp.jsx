@@ -20,6 +20,44 @@ const blankProject = (category = "") => ({
   title: "", category, location: "", plotSize: "", size: "", bedrooms: "", bathrooms: "",
   floors: "", style: "", description: "", features: "", image: "", gallery: "", floorPlanUrl: "", status: "Draft",
 });
+const recommendedServices = [
+  {
+    name: "Architectural Design & Planning",
+    description: "Thoughtful architectural planning that turns your requirements into a coordinated home design.",
+    fullDescription: "Features:\n- Brief and space-requirement review\n- Concept layout development\n- Design-development drawing coordination",
+    icon: "⌂",
+  },
+  {
+    name: "3D Exterior Visualization",
+    description: "Visual studies to help review a home's exterior form, materials and overall character.",
+    fullDescription: "Features:\n- Exterior form and massing views\n- Material and colour studies\n- Visuals for design review",
+    icon: "◈",
+  },
+  {
+    name: "Interior Design",
+    description: "Interior planning that brings room layouts, finishes and furnishings together in a cohesive scheme.",
+    fullDescription: "Features:\n- Room-layout planning\n- Material and finish palettes\n- Furniture and lighting concepts",
+    icon: "▧",
+  },
+  {
+    name: "Floor Plans & Space Planning",
+    description: "Clear floor plans and room planning to make everyday movement and use of space easier to review.",
+    fullDescription: "Features:\n- Room and zone planning\n- Circulation and storage review\n- Clear plan drawings",
+    icon: "▦",
+  },
+  {
+    name: "Home Renovation & Remodeling",
+    description: "Design guidance for updating existing homes, from reviewing the brief to proposing revised layouts.",
+    fullDescription: "Features:\n- Existing-home requirements review\n- Revised layout concepts\n- Material and finish recommendations",
+    icon: "↻",
+  },
+  {
+    name: "Material & Finish Consultation",
+    description: "Guidance comparing materials and finishes to support a coordinated interior or exterior palette.",
+    fullDescription: "Features:\n- Material and finish comparisons\n- Colour-palette coordination\n- Surface recommendations by space",
+    icon: "◇",
+  },
+];
 
 function PageHeading({ eyebrow = "WORKSPACE", title, description, action }) {
   return <div className="admin-page-heading"><div><span className="admin-eyebrow">{eyebrow}</span><h1>{title}</h1>{description && <p>{description}</p>}</div>{action && <div className="admin-heading-action">{action}</div>}</div>;
@@ -370,7 +408,38 @@ function ManageList({ kind, collection, projects }) {
   const [busy, setBusy] = useState(false);
   const editingItem = collection.items.find((item) => item.id === editing);
   const resourcePath = serviceMode ? "/api/services/" : "/api/categories/";
+  const missingRecommendedServices = serviceMode
+    ? recommendedServices.filter((recommended) => !collection.items.some(
+      (item) => item.name.trim().toLocaleLowerCase() === recommended.name.toLocaleLowerCase(),
+    ))
+    : [];
   const resetForm = () => { setName(""); setDescription(""); setFullDescription(""); setIcon(""); setStatus("Draft"); setEditing(null); };
+
+  const addRecommendedServices = async () => {
+    if (!serviceMode || missingRecommendedServices.length === 0) return;
+    setBusy(true);
+    setError("");
+    let createdCount = 0;
+    try {
+      for (const service of missingRecommendedServices) {
+        const saved = await apiRequest(resourcePath, {
+          method: "POST",
+          authenticated: true,
+          body: { ...service, status: "Published" },
+        });
+        collection.setItems((current) => [...current, saved]);
+        createdCount += 1;
+      }
+    } catch (requestError) {
+      setError(
+        createdCount
+          ? `Added ${createdCount} service${createdCount === 1 ? "" : "s"} before the request failed. ${requestError.message || "The remaining services could not be added."}`
+          : requestError.message || "The recommended services could not be added.",
+      );
+    } finally {
+      setBusy(false);
+    }
+  };
 
   const addOrSave = async (event) => {
     event.preventDefault();
@@ -430,7 +499,15 @@ function ManageList({ kind, collection, projects }) {
   };
 
   return <>
-    <PageHeading title={serviceMode ? "Services" : "Categories"} description={serviceMode ? "Shape the services visitors can explore." : "Organise projects into easy-to-browse collections."} />
+    <PageHeading
+      title={serviceMode ? "Services" : "Categories"}
+      description={serviceMode ? "Shape the services visitors can explore." : "Organise projects into easy-to-browse collections."}
+      action={serviceMode && missingRecommendedServices.length > 0 && (
+        <Button type="button" disabled={busy} onClick={addRecommendedServices}>
+          {busy ? "Adding services…" : `Add ${missingRecommendedServices.length} recommended service${missingRecommendedServices.length === 1 ? "" : "s"}`}
+        </Button>
+      )}
+    />
     {error && <p className="admin-error" role="alert">{error}</p>}
     <div className="admin-manage-grid"><section className="admin-panel admin-manage-list"><div className="admin-panel-heading"><div><span className="admin-eyebrow">{serviceMode ? "OFFERINGS" : "PORTFOLIO"}</span><h2>{serviceMode ? "Service list" : "Project categories"}</h2></div><span className="admin-count-pill">{collection.items.length}</span></div>{collection.items.map((item) => <div className="admin-manage-item" key={item.id}><span className="admin-manage-icon">{serviceMode ? item.icon || "◇" : "▤"}</span><div className="admin-manage-copy"><strong>{item.name}</strong><small>{item.description || "No description added."}</small></div><StatusBadge>{item.status}</StatusBadge><button disabled={busy} className="admin-icon-action" onClick={() => startEdit(item)} aria-label={`Edit ${item.name}`} title="Edit">✎</button><button disabled={busy} className="admin-icon-action" onClick={() => toggle(item)} aria-label={`${item.status === "Published" ? "Unpublish" : "Publish"} ${item.name}`} title={item.status === "Published" ? "Unpublish" : "Publish"}>{item.status === "Published" ? "◌" : "↑"}</button><button disabled={busy} className="admin-icon-action admin-icon-delete" onClick={() => setDeleteTarget(item)} aria-label={`Delete ${item.name}`} title="Delete">×</button></div>)}{!collection.items.length && <EmptyState title={`No ${kind.toLowerCase()}s yet`} message={`Add your first ${kind.toLowerCase()} using the form.`} />}</section>
     <section className="admin-panel admin-add-panel"><span className="admin-eyebrow">{editing ? "UPDATE" : "NEW ENTRY"}</span><h2>{editing ? `Edit ${kind.toLowerCase()}` : `Add ${kind.toLowerCase()}`}</h2><p>{serviceMode ? "Give visitors a clear idea of how your studio can help." : "Use a concise name that makes projects easy to find."}</p><form onSubmit={addOrSave}><label className="admin-field"><span>{kind} name <i>*</i></span><input value={name} onChange={(event) => setName(event.target.value)} required /></label><label className="admin-field"><span>{serviceMode ? "Short description" : "Description"}</span><textarea rows="3" value={description} onChange={(event) => setDescription(event.target.value)} /></label>{serviceMode && <><label className="admin-field"><span>Full description</span><textarea rows="5" value={fullDescription} onChange={(event) => setFullDescription(event.target.value)} /></label><label className="admin-field"><span>Icon</span><input value={icon} onChange={(event) => setIcon(event.target.value)} /></label></>}<label className="admin-field"><span>Status</span><select value={status} onChange={(event) => setStatus(event.target.value)}><option>Draft</option><option>Published</option></select></label><Button type="submit" disabled={busy}>{busy ? "Saving…" : editing ? `Save ${kind.toLowerCase()}` : `Add ${kind.toLowerCase()}`}</Button>{editing && <button type="button" className="admin-cancel-edit" onClick={resetForm}>Cancel editing</button>}</form></section></div>

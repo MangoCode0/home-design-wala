@@ -25,7 +25,8 @@ function Navbar() {
     <header className={`navbar ${scrolled || menuOpen ? "navbar--solid" : ""}`}>
       <div className="container navbar__inner">
         <a href="#top" className="navbar__logo" onClick={() => setMenuOpen(false)}>
-          Home Design Wala
+          <img src="/images/home-design-wala-logo.png" alt="" />
+          <span>Home Design Wala</span>
         </a>
 
         <nav className={`navbar__menu ${menuOpen ? "navbar__menu--open" : ""}`} aria-label="Main">

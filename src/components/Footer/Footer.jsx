@@ -15,7 +15,10 @@ function Footer() {
     <footer className="footer">
       <div className="container footer__inner">
         <div className="footer__brand">
-          <p className="footer__logo">{settings?.businessName || "Home Design Wala"}</p>
+          <div className="footer__brand-heading">
+            <img src="/images/home-design-wala-logo.png" alt="Home Design Wala logo" />
+            <p className="footer__logo">{settings?.businessName || "Home Design Wala"}</p>
+          </div>
           {settings?.shortDescription && <p>{settings.shortDescription}</p>}
         </div>
 
